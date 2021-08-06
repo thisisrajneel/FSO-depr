@@ -18,7 +18,14 @@ const Display = (props) => (
 
 const Show = (props) => (
     <>
-        <p>{props.text} {props.count}</p>
+        <tr>
+            <td>
+                {props.text}
+            </td>
+            <td>
+                {props.count}
+            </td>
+        </tr>
     </>
 
 )
@@ -38,9 +45,14 @@ const Statistics = ({good, bad, neutral}) => {
             <Show text="bad" count={bad} />
             <Show text="all" count={all} />
             <Show text="average" count={average} />
-            <p>
-                positive {good*100/all} %
-            </p>
+            <tr>
+                <td>
+                    positive
+                </td>
+                <td>
+                    {good*100/all} %
+                </td>
+            </tr>
         </>
     )
 }
