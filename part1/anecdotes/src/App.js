@@ -21,10 +21,21 @@ const App = () => {
   ]
 
   let rand = Math.floor(Math.random()*7)
+
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState([0,0,0,0,0,0,0])
+
+  const vote = () => {
+    let copy = [...points]
+    copy[selected]+=1
+    setPoints(copy)
+  }
+  
   return (
     <>
       <p>{anecdotes[selected]}</p>
+      <p>has {points[selected]} votes</p>
+      <Button text="vote" handler={vote} />
       <Button text="next anecdote" handler={() => setSelected(rand)} />
     </>
   )
