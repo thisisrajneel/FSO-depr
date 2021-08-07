@@ -8,6 +8,14 @@ const Button = (props) => (
   </>
 )
 
+const Display = (props) => (
+  <>
+    <h1>
+      {props.text}
+    </h1>
+  </>
+)
+
 const App = () => {
   
   const anecdotes = [
@@ -20,10 +28,11 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blod tests when dianosing patients'
   ]
 
-  let rand = Math.floor(Math.random()*7)
-
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState([0,0,0,0,0,0,0])
+
+  let rand = Math.floor(Math.random()*7)
+  const max = points.indexOf(Math.max(...points))
 
   const vote = () => {
     let copy = [...points]
@@ -33,10 +42,13 @@ const App = () => {
   
   return (
     <>
+      <Display text="Anecdote of the day" />
       <p>{anecdotes[selected]}</p>
       <p>has {points[selected]} votes</p>
       <Button text="vote" handler={vote} />
       <Button text="next anecdote" handler={() => setSelected(rand)} />
+      <Display text="Anecdote with most votes" />
+      <p>{anecdotes[max]}</p>
     </>
   )
 }
