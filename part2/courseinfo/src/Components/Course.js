@@ -1,18 +1,20 @@
 import React from "react";
 
-const Header = ({ course }) => (
+const Header = ({ name }) => (
   <>
-    <h1>{course.name}</h1>
+    <h1>{name}</h1>
   </>
 );
 
-const Part = ({ name, exercises }) => (
-  <>
-    <p>
-      {name} {exercises}
-    </p>
-  </>
-);
+const Part = ({ name, exercises }) => {
+    return (
+        <>
+          <p>
+            {name} {exercises}
+          </p>
+        </>
+    )
+};
 
 const Content = ({ parts }) => {
   return (
@@ -23,12 +25,11 @@ const Content = ({ parts }) => {
 };
 
 const Total = ({parts}) => {
-    let exer = parts.map( part => part.exercises)
-    let total = exer.reduce((sum, exer) => sum+exer, 0)
+    const sum = parts.reduce((total, part) => total + part.exercises, 0);
     return (
         <>
           <strong>
-            Total of {total} exercises
+            Total of {sum} exercises
           </strong>
         </>
     )
@@ -37,7 +38,7 @@ const Total = ({parts}) => {
 const Course = ({ course }) => {
   return (
     <>
-      <Header course={course} />
+      <Header name={course.name} />
       <Content parts={course.parts} />
       <Total parts={course.parts} />
     </>
