@@ -1,72 +1,68 @@
-import React, { useState } from 'react' 
+import React, { useState } from "react";
+import Form from "./Components/PersonForm";
+import Details from "./Components/PersonDetails";
+import Filter from "./Components/Filter";
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas',
-      number: 9876543210 }
-  ]) 
-  const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber] = useState('')
-  const [ personsToShow, setPersonsToShow ] = useState(persons)
-
-  const nameFilter = (event) => {
-    let a = event.target.value
-    const showPerson = persons.filter(person => person.name.toLowerCase().includes(a.toLowerCase()) === true)
-    setPersonsToShow(showPerson)
-  }
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: 9876543210 },
+  ]);
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
+  const [personsToShow, setPersonsToShow] = useState(persons);
 
   const handleNewName = (event) => {
-    let n = event.target.value
-    setNewName(n)
-  }
+    let n = event.target.value;
+    setNewName(n);
+  };
 
   const handleNewNumber = (event) => {
-    let m = event.target.value
-    setNewNumber(m)
-  }
+    let m = event.target.value;
+    setNewNumber(m);
+  };
 
   const addNewName = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    let flag = false
-    persons.forEach( person => {
+    let flag = false;
+    persons.forEach((person) => {
       if (person.name === newName) {
-        alert(`${person.name} is already added to phonebook`)
-        flag = true
+        alert(`${person.name} is already added to phonebook`);
+        flag = true;
       }
-    })
-    if(flag === false) {
+    });
+    if (flag === false) {
       let temp = {
         name: newName,
-        number: newNumber
-      }
-      setPersons(persons.concat(temp))
-      setNewName('')
-      setNewNumber('')
-      setPersonsToShow(persons.concat(temp))
+        number: newNumber,
+      };
+      setPersons(persons.concat(temp));
+      setNewName("");
+      setNewNumber("");
+      setPersonsToShow(persons.concat(temp));
     }
-  }
+  };
 
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with <input onChange={nameFilter}/>
+      <Filter persons={persons} setPersonsToShow={setPersonsToShow} />
       <h2>add a new</h2>
-      <form  onSubmit={addNewName}>
-        <div>
-          name: <input value={newName} onChange={handleNewName} /> <br />
-          number: <input value={newNumber} onChange={handleNewNumber} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Form
+        newName={newName}
+        newNumber={newNumber}
+        handleNewName={handleNewName}
+        handleNewNumber={handleNewNumber}
+        addNewName={addNewName}
+      />
       <h2>Numbers</h2>
       <ol>
-        {personsToShow.map(per => <li key={per.name}>{per.name} {per.number}</li>)}
+        {personsToShow.map((per) => (
+          <Details name={per.name} number={per.number} />
+        ))}
       </ol>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
