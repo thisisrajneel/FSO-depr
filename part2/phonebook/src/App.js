@@ -13,12 +13,21 @@ const App = () => {
 
   const addNewName = (event) => {
     event.preventDefault()
-    let temp = {
-      name:newName
+
+    let flag = false
+    persons.forEach( person => {
+      if (person.name === newName) {
+        alert(`${person.name} is already added to phonebook`)
+        flag = true
+      }
+    })
+    if(flag === false) {
+      let temp = {
+        name:newName
+      }
+      setPersons(persons.concat(temp))
+      setNewName('')
     }
-    setPersons(persons.concat(temp))
-    setNewName('')
-    console.log(persons);
   }
 
   return (
