@@ -3,14 +3,13 @@ import Form from "./Components/PersonForm";
 import Details from "./Components/PersonDetails";
 import Filter from "./Components/Filter";
 
-const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: 9876543210 },
-  ]);
+const App = ({people}) => {
+  console.log(typeof people);
+  const [persons, setPersons] = useState([...people]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-  const [personsToShow, setPersonsToShow] = useState(persons);
-
+  const [personsToShow, setPersonsToShow] = useState(people);
+  console.log(1,persons);
   const handleNewName = (event) => {
     let n = event.target.value;
     setNewName(n);
