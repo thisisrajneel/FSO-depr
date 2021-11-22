@@ -1,4 +1,5 @@
 import React from 'react'
+import Weather from './Weather'
 
 const View = ({ countries, countriesToShow }) => {
 
@@ -29,6 +30,7 @@ const View = ({ countries, countriesToShow }) => {
         <div>
           <img src={flag} ></img>
         </div>
+        <Weather capital={capital} />
       </div>
     )
 
