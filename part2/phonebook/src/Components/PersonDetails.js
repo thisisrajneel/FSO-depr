@@ -1,7 +1,7 @@
 import React from "react";
 
-const Details = ({  name, number }) => (
-    <li key={name} >
+const Details = ({  name, number, id }) => (
+    <li key={id} >
         {name} {number}
     </li>
 );

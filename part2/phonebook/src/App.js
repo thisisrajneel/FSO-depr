@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "./Components/PersonForm";
 import Details from "./Components/PersonDetails";
 import Filter from "./Components/Filter";
+import axios from 'axios'
 
 const App = ({people}) => {
   console.log(typeof people);
@@ -33,12 +34,15 @@ const App = ({people}) => {
     if (flag === false) {
       let temp = {
         name: newName,
-        number: newNumber,
+        number: newNumber
       };
-      setPersons(persons.concat(temp));
-      setNewName("");
-      setNewNumber("");
-      setPersonsToShow(persons.concat(temp));
+      axios.post('http://localhost:3001/persons', temp).then(response => {
+        setPersons(persons.concat(response.data));
+        setNewName("");
+        setNewNumber("");
+        setPersonsToShow(persons.concat(response.data));
+      })
+      
     }
   };
 
@@ -57,7 +61,7 @@ const App = ({people}) => {
       <h2>Numbers</h2>
       <ol>
         {personsToShow.map((per) => (
-          <Details name={per.name} number={per.number} />
+          <Details name={per.name} number={per.number} id={per.id} />
         ))}
       </ol>
     </div>
