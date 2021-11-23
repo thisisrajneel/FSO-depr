@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Form from "./Components/PersonForm";
 import Details from "./Components/PersonDetails";
 import Filter from "./Components/Filter";
-import axios from 'axios'
+import recordService from './services/record'
 
 const App = ({people}) => {
   console.log(typeof people);
@@ -36,11 +36,11 @@ const App = ({people}) => {
         name: newName,
         number: newNumber
       };
-      axios.post('http://localhost:3001/persons', temp).then(response => {
-        setPersons(persons.concat(response.data));
+      recordService.create(temp).then(response => {
+        setPersons(persons.concat(response));
         setNewName("");
         setNewNumber("");
-        setPersonsToShow(persons.concat(response.data));
+        setPersonsToShow(persons.concat(response));
       })
       
     }
