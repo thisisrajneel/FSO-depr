@@ -14,7 +14,14 @@ const create = async (obj) => {
     return response.data
 }
 
+const deleteOne = async (id) => {
+    const request = axios.delete(`${baseurl}/${id}`)
+    const response = await request
+    return response.data
+}
+
 export default {
     getAll,
-    create
+    create,
+    deleteOne
 }

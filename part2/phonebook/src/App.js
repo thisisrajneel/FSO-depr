@@ -3,9 +3,10 @@ import Form from "./Components/PersonForm";
 import Details from "./Components/PersonDetails";
 import Filter from "./Components/Filter";
 import recordService from './services/record'
+import record from "./services/record";
 
 const App = ({people}) => {
-  console.log(typeof people);
+
   const [persons, setPersons] = useState([...people]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
@@ -46,6 +47,14 @@ const App = ({people}) => {
     }
   };
 
+  const deleteName = (id, name) => {
+    if(window.confirm(`Are you sure you want to delete ${name} ?`)) {
+      recordService.deleteOne(id).then(response => {
+        setPersonsToShow(personsToShow.filter(per => per.name !== name))
+      })
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -61,7 +70,7 @@ const App = ({people}) => {
       <h2>Numbers</h2>
       <ol>
         {personsToShow.map((per) => (
-          <Details name={per.name} number={per.number} id={per.id} />
+          <Details name={per.name} number={per.number} id={per.id} deleteName={deleteName} />
         ))}
       </ol>
     </div>
