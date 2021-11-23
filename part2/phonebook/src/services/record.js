@@ -20,8 +20,15 @@ const deleteOne = async (id) => {
     return response.data
 }
 
+const update = async (id, obj) => {
+    const request = axios.put(`${baseurl}/${id}`, obj)
+    const response = await request
+    return response.data
+}
+
 export default {
     getAll,
     create,
-    deleteOne
+    deleteOne,
+    update
 }

@@ -3,7 +3,6 @@ import Form from "./Components/PersonForm";
 import Details from "./Components/PersonDetails";
 import Filter from "./Components/Filter";
 import recordService from './services/record'
-import record from "./services/record";
 
 const App = ({people}) => {
 
@@ -28,7 +27,18 @@ const App = ({people}) => {
     let flag = false;
     persons.forEach((person) => {
       if (person.name === newName) {
-        alert(`${person.name} is already added to phonebook`);
+        if(window.confirm(`${person.name} has already been added to the phonebook. replace the old number with the new one?`)) {
+          let temp = {
+            name: person.name,
+            number: newNumber,
+            id: person.id
+          }
+          console.log(temp);
+          recordService.update(person.id, temp).then(response => {
+            alert(`${response.name} has been updated`);
+          })
+          setPersonsToShow(personsToShow.map(per => per.id !== temp.id ? per : temp))
+        }
         flag = true;
       }
     });
