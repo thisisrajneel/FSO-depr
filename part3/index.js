@@ -29,6 +29,23 @@ app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
 
+app.get('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id)
+    const found = persons.find(person => person.id === id)
+    res.json(found)
+})
+
+// INCOMPLETE
+// see how to get request header Date
+app.get('/info', (req, res) => {
+    res.send(`Phonebook has info for ${persons.length} people`)
+    const text = res.header()._header
+    const time = JSON.stringify(text.split('\n')[3])
+    const newtime = time.substring(7, time.length-3)
+    console.log(newtime);
+    
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
     console.log('app running on 3001');
