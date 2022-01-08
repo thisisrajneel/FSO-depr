@@ -27,6 +27,7 @@ const App = ({people}) => {
     event.preventDefault();
 
     let flag = false;
+    let rem = false;
     persons.forEach((person) => {
       if (person.name === newName) {
         if(window.confirm(`${person.name} has already been added to the phonebook. replace the old number with the new one?`)) {
@@ -41,8 +42,16 @@ const App = ({people}) => {
             setTimeout(() => {
               setErrorMessage(null)
             }, 3000)
+          }).catch(error => {
+            setErrorMessage(`${person.name} has already been removed from server!`)
+            rem=true;
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 3000)
           })
-          setPersonsToShow(personsToShow.map(per => per.id !== temp.id ? per : temp))
+          if(!rem) {
+            setPersonsToShow(personsToShow.map(per => per.id !== temp.id ? per : temp))
+          }
         }
         flag = true;
       }
