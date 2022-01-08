@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "./Components/PersonForm";
 import Details from "./Components/PersonDetails";
 import Filter from "./Components/Filter";
+import Notification from "./Components/Notification";
 import recordService from './services/record'
 
 const App = ({people}) => {
@@ -10,7 +11,8 @@ const App = ({people}) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [personsToShow, setPersonsToShow] = useState(people);
-  console.log(1,persons);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const handleNewName = (event) => {
     let n = event.target.value;
     setNewName(n);
@@ -35,7 +37,10 @@ const App = ({people}) => {
           }
           console.log(temp);
           recordService.update(person.id, temp).then(response => {
-            alert(`${response.name} has been updated`);
+            setErrorMessage(`${person.name} has been updated!`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 3000)
           })
           setPersonsToShow(personsToShow.map(per => per.id !== temp.id ? per : temp))
         }
@@ -52,8 +57,12 @@ const App = ({people}) => {
         setNewName("");
         setNewNumber("");
         setPersonsToShow(persons.concat(response));
+
+        setErrorMessage(`${temp.name} has been added!`)
+        setTimeout(()=>{
+          setErrorMessage(null)
+        }, 3000)
       })
-      
     }
   };
 
@@ -68,6 +77,7 @@ const App = ({people}) => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage}/>
       <Filter persons={persons} setPersonsToShow={setPersonsToShow} />
       <h2>add a new</h2>
       <Form
